@@ -27,8 +27,7 @@ export default function AppFunctional(props) {
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
-    const x = ['1', '2', '3'];
-    const y = ['1', '2', '3'];
+  
   
   //   const xRow = x.find((row) => row.includes("B"));
   //   const xIndex = xRow.indexOf("B");
@@ -36,6 +35,7 @@ export default function AppFunctional(props) {
   //   const yIndex = yCol.indexOf("B");
   //   console.log(xIndex, yIndex);
   //   return {x: xIndex, y: yIndex};
+
    }
 
   function getXYMessage() {
@@ -58,17 +58,44 @@ export default function AppFunctional(props) {
     console.log(message, email, steps, x, y)
   }
 
-  function getNextIndex(direction) {
-    // This helper takes a direction ("left", "up", etc) and calculates what the next index
-    // of the "B" would be. If the move is impossible because we are at the edge of the grid,
-    // this helper should return the current index unchanged.
-    
+  // function getNextIndex(direction) {
+  //   // This helper takes a direction ("left", "up", etc) and calculates what the next index
+  //   // of the "B" would be. If the move is impossible because we are at the edge of the grid,
+  //   // this helper should return the current index unchanged.
+  // }
+  
+  function moveLeft() {
+    if (x > 1) {
+      setX(x-1);
+    }
+    console.log(x)
+  }
+  function moveRight() {
+    if(x < 3) {
+      setX(x+1);
+    }
+    console.log(x);
+  }
+
+  function moveDown() {
+    if (y < 3) {
+      setY(y +1);
+    }
+    console.log(y);
+  }
+  function moveUp() {
+    if (y > 1) {
+      setY(y - 1)
+    }
+    console.log(y);
   }
 
   function move(evt) {
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
+
   }
+ 
 
   function onChange(evt) {
     // You will need this to update the value of the input.
@@ -78,14 +105,14 @@ export default function AppFunctional(props) {
     // Use a POST request to send a payload to the server.
   }
 
-  const onClickHandler = ((e) => {
-    const rect = e.target.getBoundingClientRect();
-    const x = e.clientX - rect.left || e.clientX + rect.right; 
-    const y = e.clientY - rect.up || e.clientY + rect.down;
-    setX(x);
-    setY(y);
-    console.log(x, y);
-  })
+  // const onClickHandler = ((e) => {
+  //   const rect = e.target.getBoundingClientRect();
+  //   const x = e.clientX - rect.left || e.clientX + rect.right; 
+  //   const y = e.clientY - rect.up || e.clientY + rect.down;
+  //   setX(x);
+  //   setY(y);
+  //   console.log(x, y);
+  // })
 
   return (
     <div id="wrapper" className={props.className}>
@@ -106,10 +133,10 @@ export default function AppFunctional(props) {
         <h3 id="message"></h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={onClickHandler}>LEFT</button>
-        <button id="up" onClick={onClickHandler}>UP</button>
-        <button id="right" onClick={onClickHandler}>RIGHT</button>
-        <button id="down" onClick={onClickHandler}>DOWN</button>
+        <button id="left" onClick={moveLeft}>LEFT</button>
+        <button id="up" onClick={moveUp}>UP</button>
+        <button id="right" onClick={moveRight}>RIGHT</button>
+        <button id="down" onClick={moveDown}>DOWN</button>
         <button id="reset" onClick={reset}>Reset</button>
       </div>
       <form>
