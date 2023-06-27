@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { array } from 'yup'
 
 // Suggested initial states
 const initialMessage = ''
@@ -6,17 +7,33 @@ const initialEmail = ''
 const initialSteps = 0
 const initialIndex = 4 // the index the "B" is at
 
+
+
 export default function AppFunctional(props) {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
-  const [initialMessage, setInitialMessage] = useState('');
-  const [initialEmail, setInitialEmail] = useState('');
-  const [initialSteps, setInitialSteps] = useState(0);
-  const [initialIndex, setInitialIndex] = useState(4);
+  const [state, setState] = useState ({
+    message: initialMessage,
+    email: initialEmail,
+    steps: initialSteps,
+    index: initialIndex
+  })
+
+   const [x, setX] = useState(2);
+   const [y, setY] = useState(2);
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
+    setX = [1, 2, 3]
+    setY = [1, 2, 3]
+    for (let i = 0; i < setX.length; i++) {
+      const xIndex = setX[i].indexOf("B");
+      if (xIndex !== -1) {
+        return {x: xIndex, y: i};
+      }
+    }
+    return {x: -1, y: -1}
   }
 
   function getXYMessage() {
@@ -27,12 +44,21 @@ export default function AppFunctional(props) {
 
   function reset() {
     // Use this helper to reset all states to their initial values.
+    
+    setState({
+      message: initialMessage,
+      email: initialEmail,
+      steps: initialSteps,
+      index: initialIndex
+    })
+    console.log(message, email, steps)
   }
 
   function getNextIndex(direction) {
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
+    
   }
 
   function move(evt) {
@@ -48,10 +74,19 @@ export default function AppFunctional(props) {
     // Use a POST request to send a payload to the server.
   }
 
+  const onClickHandler = ((e) => {
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left || e.clientX + rect.right; 
+    const y = e.clientY - rect.up || e.clientY + rect.down;
+    setX(x);
+    setY(y);
+    console.log(x, y);
+  })
+
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates (2, 2)</h3>
+        <h3 id="coordinates">{getXY()}</h3>
         <h3 id="steps">You moved 0 times</h3>
       </div>
       <div id="grid">
@@ -67,11 +102,11 @@ export default function AppFunctional(props) {
         <h3 id="message"></h3>
       </div>
       <div id="keypad">
-        <button id="left">LEFT</button>
-        <button id="up">UP</button>
-        <button id="right">RIGHT</button>
-        <button id="down">DOWN</button>
-        <button id="reset">reset</button>
+        <button id="left" onClick={onClickHandler}>LEFT</button>
+        <button id="up" onClick={onClickHandler}>UP</button>
+        <button id="right" onClick={onClickHandler}>RIGHT</button>
+        <button id="down" onClick={onClickHandler}>DOWN</button>
+        <button id="reset" onClick={reset}>Reset</button>
       </div>
       <form>
         <input id="email" type="email" placeholder="type email"></input>
