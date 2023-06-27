@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { array } from 'yup'
 
 // Suggested initial states
 const initialMessage = ''
@@ -16,8 +15,11 @@ export default function AppFunctional(props) {
     message: initialMessage,
     email: initialEmail,
     steps: initialSteps,
-    index: initialIndex
+    index: initialIndex,
+    x: 2,
+    y: 2,
   })
+
 
    const [x, setX] = useState(2);
    const [y, setY] = useState(2);
@@ -25,16 +27,16 @@ export default function AppFunctional(props) {
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
-    setX = [1, 2, 3]
-    setY = [1, 2, 3]
-    for (let i = 0; i < setX.length; i++) {
-      const xIndex = setX[i].indexOf("B");
-      if (xIndex !== -1) {
-        return {x: xIndex, y: i};
-      }
-    }
-    return {x: -1, y: -1}
-  }
+    const x = ['1', '2', '3'];
+    const y = ['1', '2', '3'];
+  
+  //   const xRow = x.find((row) => row.includes("B"));
+  //   const xIndex = xRow.indexOf("B");
+  //   const yCol = y.find((col) => col.includes("B"));
+  //   const yIndex = yCol.indexOf("B");
+  //   console.log(xIndex, yIndex);
+  //   return {x: xIndex, y: yIndex};
+   }
 
   function getXYMessage() {
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
@@ -49,9 +51,11 @@ export default function AppFunctional(props) {
       message: initialMessage,
       email: initialEmail,
       steps: initialSteps,
-      index: initialIndex
+      index: initialIndex,
+      x: 2,
+      y: 2,
     })
-    console.log(message, email, steps)
+    console.log(message, email, steps, x, y)
   }
 
   function getNextIndex(direction) {
