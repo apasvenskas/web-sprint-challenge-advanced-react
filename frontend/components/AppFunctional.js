@@ -21,17 +21,12 @@ export default function AppFunctional(props) {
   const [x, setX] = useState(2);
   const [y, setY] = useState(2);
 
-  //const [initialIndex, setIndex] = useState(4);
+  const [count, setCount] = useState(0);
+  const [message, setMessage] = useState(``);
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
-    //   const xRow = x.find((row) => row.includes("B"));
-    //   const xIndex = xRow.indexOf("B");
-    //   const yCol = y.find((col) => col.includes("B"));
-    //   const yIndex = yCol.indexOf("B");
-    //   console.log(xIndex, yIndex);
-    //   return {x: xIndex, y: yIndex};
   }
 
   function getXYMessage() {
@@ -93,61 +88,72 @@ export default function AppFunctional(props) {
 
   // }
 
-  function buttonClick(direction) {
-    if (direction === "left"){
-      setIndex(initialIndex - 1);
-    }
-  }
-
-  function onChange(evt) {
+  function onChange() {
     // You will need this to update the value of the input.
+    if (x) {
+      setCount(count + 1);
+    }
+    if (y) {
+      setCount(count + 1);
+    }
+    if (x === 1) {
+    }
   }
 
   function onSubmit(evt) {
     // Use a POST request to send a payload to the server.
   }
 
-  // const onClickHandler = ((e) => {
-  //   const rect = e.target.getBoundingClientRect();
-  //   const x = e.clientX - rect.left || e.clientX + rect.right;
-  //   const y = e.clientY - rect.up || e.clientY + rect.down;
-  //   setX(x);
-  //   setY(y);
-  //   console.log(x, y);
-  // })
-
   function handleClickLeft() {
     moveLeft();
-    buttonClick();
+    onChange();
+  }
+  function handleClickRight() {
+    moveRight();
+    onChange();
+  }
+  function handleClickUp() {
+    moveUp();
+    onChange();
+    if (y === 1) {
+      setMessage(`You can't move up`);
+    }
+  }
+  function handleClickDown() {
+    moveDown();
+    onChange();
   }
 
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">{`${x}, ${y}`}</h3>
-        <h3 id="steps">You moved 0 times</h3>
+        <h3 id="steps">You moved {count} times</h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
-          <div key={idx} className={`square${idx === (y - 1) * 3 + x - 1 ? " active" : ""}`}>
+          <div
+            key={idx}
+            className={`square${idx === (y - 1) * 3 + x - 1 ? " active" : ""}`}
+          >
             {idx === (y - 1) * 3 + x - 1 ? "B" : null}
           </div>
         ))}
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={handleClickLeft}>
+        <button id="left" onClick={handleClickLeft} disabled={x === 1}>
           LEFT
         </button>
-        <button id="up" onClick={moveUp}>
+        <button id="up" onClick={handleClickUp} disabled={y === 1}>
           UP
         </button>
-        <button id="right" onClick={moveRight}>
+        <button id="right" onClick={handleClickRight} disabled={x === 3}>
           RIGHT
         </button>
-        <button id="down" onClick={moveDown}>
+        <button id="down" onClick={handleClickDown} disabled={y === 3}>
           DOWN
         </button>
         <button id="reset" onClick={reset}>
