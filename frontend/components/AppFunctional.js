@@ -14,8 +14,6 @@ export default function AppFunctional(props) {
     email: initialEmail,
     steps: initialSteps,
     index: initialIndex,
-    x: 2,
-    y: 2,
   });
 
   const [x, setX] = useState(2);
@@ -23,16 +21,45 @@ export default function AppFunctional(props) {
 
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState(``);
+  const [presCount, setPressCount] = useState(0);
 
-  function getXY() {
-    // It it not necessary to have a state to track the coordinates.
-    // It's enough to know what index the "B" is at, to be able to calculate them.
-  }
+  // function getXY() {
+  //   // It it not necessary to have a state to track the coordinates.
+  //   // It's enough to know what index the "B" is at, to be able to calculate them.
+  // }
 
-  function getXYMessage() {
-    // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
-    // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
-    // returns the fully constructed string.
+  // function getXYMessage() {
+  //   // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
+  //   // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
+  //   // returns the fully constructed string.
+  // }
+
+  function displayMessage() {
+    if (x === 1 && (y === 1 || y === 2 || y === 3)) {
+      setPressCount(presCount + 1)
+      if(presCount >= 1){
+        setMessage(`You can't move left`);
+      }
+    } else if (x === 3 && (y === 1 || y === 2 || y === 3)) {
+      setPressCount(presCount+ 1)
+      if(presCount >= 1){
+      setMessage(`You can't move right`);
+      }
+    } else if (y === 1 && (x === 1 || x === 2 || x === 3)) {
+      setPressCount(presCount + 1)
+      if(presCount >= 1){
+      setMessage(`You can't move up`);
+      }
+    } else if (y === 3 && (x === 1 || x === 2 || x === 3)) {
+      setPressCount(presCount + 1)
+      if(presCount >= 1){
+      setMessage(`You can't move down`);
+      }
+    } else {
+      setMessage('');
+      setPressCount(0);
+    }
+    console.log(message);
   }
 
   function reset() {
@@ -43,9 +70,12 @@ export default function AppFunctional(props) {
       email: initialEmail,
       steps: initialSteps,
       index: initialIndex,
-      x: 2,
-      y: 2,
     });
+    setX(2);
+    setY(2);
+    setCount(0);
+    setMessage('');
+    setPressCount(0);
     console.log(message, email, steps, x, y);
   }
 
@@ -59,14 +89,14 @@ export default function AppFunctional(props) {
     if (x > 1) {
       setX(x - 1);
     }
-    console.log(x);
+    console.log(x, message);
   }
 
   function moveRight() {
     if (x < 3) {
       setX(x + 1);
     }
-    console.log(x);
+    console.log(x, message);
   }
 
   function moveDown() {
@@ -96,8 +126,6 @@ export default function AppFunctional(props) {
     if (y) {
       setCount(count + 1);
     }
-    if (x === 1) {
-    }
   }
 
   function onSubmit(evt) {
@@ -105,21 +133,22 @@ export default function AppFunctional(props) {
   }
 
   function handleClickLeft() {
+    displayMessage();
     moveLeft();
     onChange();
   }
   function handleClickRight() {
+    displayMessage();
     moveRight();
     onChange();
   }
   function handleClickUp() {
+    displayMessage();
     moveUp();
     onChange();
-    if (y === 1) {
-      setMessage(`You can't move up`);
-    }
   }
   function handleClickDown() {
+    displayMessage();
     moveDown();
     onChange();
   }
