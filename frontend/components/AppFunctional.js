@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 
 // Suggested initial states
 const initialMessage = "";
-const initialEmail = "";
+const initialEmail = "email@email.com";
 const initialSteps = 0;
 const initialIndex = 4; // the index the "B" is at
 
@@ -153,6 +155,35 @@ export default function AppFunctional(props) {
     onChange();
   }
 
+  const handleEmailChange = (e) => {
+    setState({...state, email: e.target.value});
+  };
+  const handleSubmit = async () => {
+    //validate email
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if(!emailRegex.test(state.email)){
+      setMessage("Ouch: email must be valid email");
+      return; 
+    }
+    const payload = {
+      x: x,
+      y: y,
+      steps: state.steps.length,
+      email: state.email,
+  };
+  // //  for Post request with axios. 
+  try{
+    const response = await axios.post(
+      "http://localhost:9000/api/results",
+      payload
+    );
+    setMessage(`${state.email}, win ${response.data}`);
+  } catch(error){
+    setMessage(`Something went wrong: {error/message}`);
+  }
+};
+
+
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
@@ -190,8 +221,17 @@ export default function AppFunctional(props) {
         </button>
       </div>
       <form>
-        <input id="email" type="email" placeholder="type email"></input>
-        <input id="submit" type="submit"></input>
+        <input id="email" type="email" 
+          placeholder="type email" 
+          value={state.email} 
+          onChange={handleEmailChange} 
+        ></input>
+        <input 
+          id="submit"
+          type="submit" 
+          onClick={handleSubmit}
+        >
+        </input>
       </form>
     </div>
   );
