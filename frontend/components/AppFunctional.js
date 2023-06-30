@@ -4,7 +4,7 @@ import axios from "axios";
 
 // Suggested initial states
 const initialMessage = "";
-const initialEmail = "email@email.com";
+const initialEmail = "";
 const initialSteps = 0;
 const initialIndex = 4; // the index the "B" is at
 
@@ -36,21 +36,23 @@ export default function AppFunctional(props) {
   //   // returns the fully constructed string.
   // }
 
- function onChange(event) {
+  function displayMessage(event) {
     const direction = event.target.id;
-    // You will need this to update the value of the input.
-    if (x === 1 && direction === "left") {
-      setCount(count);
-    } else if (x === 3 && direction === "right") {
-      setCount(count);
-    } else if (y === 1 && direction === "up") {
-      setCount(count);
-    } else if (y === 3 && direction === "down") {
-      setCount(count);
+    if (direction === "left" && x === 1) {
+      setMessage(`You can't move left`);
+    } else if (direction === "right" && x === 3) {
+      setMessage(`You can't move right`);
+    } else if (direction === "up" && y === 1) {
+      setMessage(`You can't move up`);
+    } else if (direction === "down" && y === 3) {
+      setMessage(`You can't move down`);
     } else {
-      setCount(count + 1);
+      setMessage("");
+      setPressCount(0);
     }
+    console.log(message);
   }
+ 
   function reset() {
     // Use this helper to reset all states to their initial values.
 
@@ -151,30 +153,39 @@ export default function AppFunctional(props) {
   const handleEmailChange = (e) => {
     setState({...state, email: e.target.value});
   };
-  const handleSubmit = async () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     //validate email
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if(!emailRegex.test(state.email)){
-      setMessage("Ouch: email must be valid email");
-      return; 
-    }
-    const payload = {
-      x: x,
-      y: y,
-      steps: state.steps.length,
-      email: state.email,
+    // const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    // if (!emailRegex.test(state.email)) {
+    //   setMessage("Ouch: email must be valid email");
+    //   return;
+    // }
+    // input for the wining message. 
+    // const input = email.split("@")[0];
+    // const randomNumber = Math.floor(Math.random()*100)+1;
+    // const payload = {
+    //   x: x,
+    //   y: y,
+    //   steps: state.count,
+    //   email: state.email,
+    // };
+    // //  for Post request with axios.
+    // async is required for await functionality. otherwise an error will show.
+     axios.post(
+        "http://localhost:9000/api/result",
+        { email, steps, x, y }
+      ).then(response => {
+         // need to format the winning message. 
+      setMessage(response.data.message);
+      })
+     
+     .catch (error => {
+      setMessage(`Something went wrong: ${error/message}`);
+     }) 
+
+    console.log(message);
   };
-  // //  for Post request with axios. 
-  try{
-    const response = await axios.post(
-      "http://localhost:9000/api/results",
-      payload
-    );
-    setMessage(`${state.email}, win ${response.data}`);
-  } catch(error){
-    setMessage(`Something went wrong: {error/message}`);
-  }
-};
 
 
   return (
