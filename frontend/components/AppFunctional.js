@@ -36,34 +36,21 @@ export default function AppFunctional(props) {
   //   // returns the fully constructed string.
   // }
 
-  function displayMessage() {
-    if (x === 1 && (y === 1 || y === 2 || y === 3)) {
-      setPressCount(presCount + 1)
-      if(presCount >= 1){
-        setMessage(`You can't move left`);
-      }
-    } else if (x === 3 && (y === 1 || y === 2 || y === 3)) {
-      setPressCount(presCount+ 1)
-      if(presCount >= 1){
-      setMessage(`You can't move right`);
-      }
-    } else if (y === 1 && (x === 1 || x === 2 || x === 3)) {
-      setPressCount(presCount + 1)
-      if(presCount >= 1){
-      setMessage(`You can't move up`);
-      }
-    } else if (y === 3 && (x === 1 || x === 2 || x === 3)) {
-      setPressCount(presCount + 1)
-      if(presCount >= 1){
-      setMessage(`You can't move down`);
-      }
+ function onChange(event) {
+    const direction = event.target.id;
+    // You will need this to update the value of the input.
+    if (x === 1 && direction === "left") {
+      setCount(count);
+    } else if (x === 3 && direction === "right") {
+      setCount(count);
+    } else if (y === 1 && direction === "up") {
+      setCount(count);
+    } else if (y === 3 && direction === "down") {
+      setCount(count);
     } else {
-      setMessage('');
-      setPressCount(0);
+      setCount(count + 1);
     }
-    console.log(message);
   }
-
   function reset() {
     // Use this helper to reset all states to their initial values.
 
@@ -120,12 +107,18 @@ export default function AppFunctional(props) {
 
   // }
 
-  function onChange() {
+  function onChange(event) {
+    const direction = event.target.id;
     // You will need this to update the value of the input.
-    if (x) {
-      setCount(count + 1);
-    }
-    if (y) {
+    if (x === 1 && direction === "left") {
+      setCount(count);
+    } else if (x === 3 && direction === "right") {
+      setCount(count);
+    } else if (y === 1 && direction === "up") {
+      setCount(count);
+    } else if (y === 3 && direction === "down") {
+      setCount(count);
+    } else {
       setCount(count + 1);
     }
   }
@@ -134,25 +127,25 @@ export default function AppFunctional(props) {
     // Use a POST request to send a payload to the server.
   }
 
-  function handleClickLeft() {
-    displayMessage();
+  function handleClickLeft(event) {
+    displayMessage(event);
     moveLeft();
-    onChange();
+    onChange(event);
   }
-  function handleClickRight() {
-    displayMessage();
+  function handleClickRight(event) {
+    displayMessage(event);
     moveRight();
-    onChange();
+    onChange(event);
   }
-  function handleClickUp() {
-    displayMessage();
+  function handleClickUp(event) {
+    displayMessage(event);
     moveUp();
-    onChange();
+    onChange(event);
   }
-  function handleClickDown() {
-    displayMessage();
+  function handleClickDown(event) {
+    displayMessage(event);
     moveDown();
-    onChange();
+    onChange(event);
   }
 
   const handleEmailChange = (e) => {
