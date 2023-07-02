@@ -125,9 +125,6 @@ export default function AppFunctional(props) {
     }
   }
 
-  function onSubmit(evt) {
-    // Use a POST request to send a payload to the server.
-  }
 
   function handleClickLeft(event) {
     displayMessage(event);
@@ -153,25 +150,10 @@ export default function AppFunctional(props) {
   const handleEmailChange = (e) => {
     setState({...state, email: e.target.value});
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    //validate email
-    // const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    // if (!emailRegex.test(state.email)) {
-    //   setMessage("Ouch: email must be valid email");
-    //   return;
-    // }
-    // input for the wining message. 
-    // const input = email.split("@")[0];
-    // const randomNumber = Math.floor(Math.random()*100)+1;
-    // const payload = {
-    //   x: x,
-    //   y: y,
-    //   steps: state.count,
-    //   email: state.email,
-    // };
-    // //  for Post request with axios.
-    // async is required for await functionality. otherwise an error will show.
+    const { email, steps } = state;
      axios.post(
         "http://localhost:9000/api/result",
         { email, steps, x, y }
