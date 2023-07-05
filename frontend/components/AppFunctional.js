@@ -39,13 +39,13 @@ export default function AppFunctional(props) {
   function displayMessage(event) {
     const direction = event.target.id;
     if (direction === "left" && x === 1) {
-      setMessage(`You can't move left`);
+      setMessage(`You can't go left`);
     } else if (direction === "right" && x === 3) {
-      setMessage(`You can't move right`);
+      setMessage(`You can't go right`);
     } else if (direction === "up" && y === 1) {
-      setMessage(`You can't move up`);
+      setMessage(`You can't go up`);
     } else if (direction === "down" && y === 3) {
-      setMessage(`You can't move down`);
+      setMessage(`You can't go down`);
     } else {
       setMessage("");
       setPressCount(0);
