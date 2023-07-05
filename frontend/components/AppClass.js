@@ -99,7 +99,7 @@ export default class AppClass extends React.Component {
     const { x, y, count } = this.state;
     const direction = event.target.id;
     if (x === 1 && direction === 'left') {
-      theis.setState({count});
+      this.setState({count});
     } else if ( x===3 && direction === 'right') {
       this.setState({count});
     } else if ( y===1 && direction === 'up') {
@@ -171,7 +171,7 @@ export default class AppClass extends React.Component {
       <div id="wrapper" className={className}>
         <div className="info">
           <h3 id="coordinates">Coordinates ({`${x}, ${y}`})</h3> 
-          <h3 id="steps">You moved {count} time</h3>
+          <h3 id="steps">You moved {count} times</h3>
         </div>
         <div id="grid">
           {
