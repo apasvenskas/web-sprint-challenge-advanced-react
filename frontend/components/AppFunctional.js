@@ -25,16 +25,7 @@ export default function AppFunctional(props) {
   const [message, setMessage] = useState(``);
   const [presCount, setPressCount] = useState(0);
 
-  // function getXY() {
-  //   // It it not necessary to have a state to track the coordinates.
-  //   // It's enough to know what index the "B" is at, to be able to calculate them.
-  // }
-
-  // function getXYMessage() {
-  //   // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
-  //   // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
-  //   // returns the fully constructed string.
-  // }
+ 
 
   function displayMessage(event) {
     const direction = event.target.id;
@@ -190,16 +181,16 @@ export default function AppFunctional(props) {
         <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={handleClickLeft} disabled={x === 1}>
+        <button id="left" onClick={handleClickLeft} >
           LEFT
         </button>
-        <button id="up" onClick={handleClickUp} disabled={y === 1}>
+        <button id="up" onClick={handleClickUp} >
           UP
         </button>
-        <button id="right" onClick={handleClickRight} disabled={x === 3}>
+        <button id="right" onClick={handleClickRight}>
           RIGHT
         </button>
-        <button id="down" onClick={handleClickDown} disabled={y === 3}>
+        <button id="down" onClick={handleClickDown}>
           DOWN
         </button>
         <button id="reset" onClick={reset}>

@@ -35,13 +35,13 @@ export default class AppClass extends React.Component {
     const { x, y } = this.state;
     const direction = event.target.id;
     if (direction === 'left' && x === 1) {
-      this.setState({ message: `You can't move left`});
+      this.setState({ message: `You can't go left`});
     } else if (direction === 'right' && x === 3) {
-      this.setState({ message: `You can't move right` });
+      this.setState({ message: `You can't go right` });
     } else if (direction === 'up' && y === 1) {
-      this.setState({ message: `You can't move up` });
+      this.setState({ message: `You can't go up` });
    } else if (direction === 'down' && y === 3) {
-    this.setState({ message: `You can't move down` });
+    this.setState({ message: `You can't go down` });
    } else {
     this.setState({ message: '', presCount: 0 });
    }
@@ -181,16 +181,16 @@ export default class AppClass extends React.Component {
         <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={this.handleClickLeft} disabled={x === 1}>
+        <button id="left" onClick={this.handleClickLeft}>
           LEFT
         </button>
-        <button id="up" onClick={this.handleClickUp} disabled={y === 1}>
+        <button id="up" onClick={this.handleClickUp}>
           UP
         </button>
-        <button id="right" onClick={this.handleClickRight} disabled={x === 3}>
+        <button id="right" onClick={this.handleClickRight}>
           RIGHT
         </button>
-        <button id="down" onClick={this.handleClickDown} disabled={y === 3}>
+        <button id="down" onClick={this.handleClickDown}>
           DOWN
         </button>
         <button id="reset" onClick={this.reset}>
