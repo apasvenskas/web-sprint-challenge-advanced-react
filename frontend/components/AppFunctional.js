@@ -145,6 +145,11 @@ export default function AppFunctional(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, steps } = state;
+    if (email === "") {
+      setMessage('Ouch: email is required')
+      return;
+    }
+    
      axios.post(
         "http://localhost:9000/api/result",
         { email, steps, x, y }
@@ -164,8 +169,8 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">{`${x}, ${y}`}</h3>
-        <h3 id="steps">You moved {count} times</h3>
+        <h3 id="coordinates"> Coordinates ({`${x}, ${y}`})</h3>
+        <h3 id="steps">You moved {count} time</h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (

@@ -139,6 +139,12 @@ export default class AppClass extends React.Component {
    handleSubmit = (e) => {
     e.preventDefault();
     const { email, steps, x, y } = this.state;
+    if (email === "") {
+      this.setState({
+        message: `Ouch: email is required`
+      })
+      return;
+    }
      axios.post(
         "http://localhost:9000/api/result",
         { email, steps, x, y }
@@ -164,8 +170,8 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">{`${x}, ${y}`}</h3> 
-          <h3 id="steps">You moved {count} times</h3>
+          <h3 id="coordinates">Coordinates ({`${x}, ${y}`})</h3> 
+          <h3 id="steps">You moved {count} time</h3>
         </div>
         <div id="grid">
           {
