@@ -143,6 +143,7 @@ export default function AppFunctional(props) {
       ).then(response => {
          // need to format the winning message. 
       setMessage(response.data.message);
+      setState({...state, email: ""})
       })
      
      .catch (error => {

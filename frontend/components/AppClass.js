@@ -153,8 +153,9 @@ export default class AppClass extends React.Component {
       ).then(response => {
          // need to format the winning message. 
       this.setState ({
-        message: response.data.message
+        message: response.data.message,
         // response.data.message
+        email: "",
       })
       })
      
