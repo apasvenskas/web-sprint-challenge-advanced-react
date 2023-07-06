@@ -14,7 +14,7 @@ export default function AppFunctional(props) {
     message: initialMessage,
     email: initialEmail,
     steps: initialSteps,
-    index: initialIndex,
+    // index: initialIndex,
   });
 
   const [x, setX] = useState(2);
@@ -22,7 +22,7 @@ export default function AppFunctional(props) {
 
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState(``);
-  const [presCount, setPressCount] = useState(0);
+  // const [presCount, setPressCount] = useState(0);
 
  
 
@@ -38,7 +38,7 @@ export default function AppFunctional(props) {
       setMessage(`You can't go down`);
     } else {
       setMessage("");
-      setPressCount(0);
+      // setPressCount(0);
     }
     console.log(message);
   }
@@ -50,14 +50,14 @@ export default function AppFunctional(props) {
       message: initialMessage,
       email: initialEmail,
       steps: initialSteps,
-      index: initialIndex,
+      // index: initialIndex,
     });
     setX(2);
     setY(2);
     setCount(0);
     setMessage('');
-    setPressCount(0);
-    console.log(message, email, steps, x, y);
+    // setPressCount(0);
+    // console.log(message, email, steps, x, y);
   }
 
   function moveLeft() {
@@ -143,7 +143,7 @@ export default function AppFunctional(props) {
       ).then(response => {
          // need to format the winning message. 
       setMessage(response.data.message);
-      setState({...state, email: ""})
+      setState({...state, email: ""});
       })
      
      .catch (error => {

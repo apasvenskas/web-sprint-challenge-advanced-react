@@ -5,12 +5,12 @@ import axios from 'axios'
 const initialMessage = ''
 const initialEmail = ''
 const initialSteps = 0
-const initialIndex = 4 // the index the "B" is at
+// const initialIndex = 4 // the index the "B" is at
 
 const initialState = {
   message: initialMessage,
   email: initialEmail,
-  index: initialIndex,
+  // index: initialIndex,
   steps: initialSteps,
 }
 
@@ -23,11 +23,11 @@ export default class AppClass extends React.Component {
       message: initialMessage,
       email: initialEmail,
       steps: initialSteps,
-      index: initialIndex,
+      // index: initialIndex,
       x: 2,
       y: 2,
       count: 0,
-      presCount: 0,
+      // presCount: 0,
     };
   }
 
@@ -58,7 +58,7 @@ export default class AppClass extends React.Component {
       x: 2,
       y: 2,
       count: 0,
-      presCount: 0,
+      // presCount: 0,
     });
     console.log(this.state.message, this.state.email, this.state.steps, this.state.x, this.state.y);
   }; 
@@ -145,8 +145,6 @@ export default class AppClass extends React.Component {
       }) 
       return;
     }
-  
-
      axios.post(
         "http://localhost:9000/api/result",
         { email, steps, x, y }
@@ -158,14 +156,13 @@ export default class AppClass extends React.Component {
         email: "",
       })
       })
-     
      .catch (error => {
       this.setState({
         message: `Something went wrong: ${error.message}`
       })
      }) 
 
-    console.log(message);
+    // console.log(message);
   };
 
   render() {
