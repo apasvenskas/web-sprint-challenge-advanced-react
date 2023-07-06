@@ -142,9 +142,11 @@ export default class AppClass extends React.Component {
     if (email === "") {
       this.setState({
         message: `Ouch: email is required`
-      })
+      }) 
       return;
     }
+  
+
      axios.post(
         "http://localhost:9000/api/result",
         { email, steps, x, y }
@@ -152,6 +154,7 @@ export default class AppClass extends React.Component {
          // need to format the winning message. 
       this.setState ({
         message: response.data.message
+        // response.data.message
       })
       })
      
@@ -171,7 +174,7 @@ export default class AppClass extends React.Component {
       <div id="wrapper" className={className}>
         <div className="info">
           <h3 id="coordinates">Coordinates ({`${x}, ${y}`})</h3> 
-          <h3 id="steps">You moved {count} times</h3>
+          <h3 id="steps">You moved {count === 1 ? '1 time': `${count} times`}</h3>
         </div>
         <div id="grid">
           {

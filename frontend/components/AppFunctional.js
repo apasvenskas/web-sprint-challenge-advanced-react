@@ -9,8 +9,7 @@ const initialSteps = 0;
 const initialIndex = 4; // the index the "B" is at
 
 export default function AppFunctional(props) {
-  // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
-  // You can delete them and build your own logic from scratch.
+ 
   const [state, setState] = useState({
     message: initialMessage,
     email: initialEmail,
@@ -61,12 +60,6 @@ export default function AppFunctional(props) {
     console.log(message, email, steps, x, y);
   }
 
-  // function getNextIndex(direction) {
-  //   // This helper takes a direction ("left", "up", etc) and calculates what the next index
-  //   // of the "B" would be. If the move is impossible because we are at the edge of the grid,
-  //   // this helper should return the current index unchanged.
-  // }
-
   function moveLeft() {
     if (x > 1) {
       setX(x - 1);
@@ -93,12 +86,6 @@ export default function AppFunctional(props) {
     }
     console.log(y);
   }
-
-  // function move(evt) {
-  //   // This event handler can use the helper above to obtain a new index for the "B",
-  //   // and change any states accordingly.
-
-  // }
 
   function onChange(event) {
     const direction = event.target.id;
@@ -170,7 +157,7 @@ export default function AppFunctional(props) {
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates"> Coordinates ({`${x}, ${y}`})</h3>
-        <h3 id="steps">You moved {count} times</h3>
+        <h3 id="steps">You moved {count === 1 ? '1 time': `${count} times`}</h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
