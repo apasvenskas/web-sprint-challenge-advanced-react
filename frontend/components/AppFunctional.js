@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-
 // Suggested initial states
 const initialMessage = "";
 const initialEmail = "";
@@ -125,6 +124,7 @@ export default function AppFunctional(props) {
     setState({ ...state, email: e.target.value });
   };
 
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, steps } = state;
@@ -132,9 +132,9 @@ export default function AppFunctional(props) {
       setMessage("Ouch: email is required");
       return;
     }
-    // check if the email is disabled
-    if (email === "foo@bar.baz") {
-      this.setState({ message: "foo@bar.baz failure #71" });
+
+    if(!emailRegex.test(email)){
+      setMessage("Ouch: email must be a valid email");
       return;
     }
 
@@ -147,7 +147,14 @@ export default function AppFunctional(props) {
       })
 
       .catch((error) => {
-        setMessage(`Something went wrong: ${error / message}`);
+        if (error.response && error.response.status === 403) {
+          const number = Math.floor(Math.random() * 100) + 1;
+          setMessage(`foo@bar.baz failure #${number}`);
+          setState({ ...state, email: "" });
+        } else {
+          setMessage(`Something went wrong: ${error / message}`);
+         
+        }
       });
 
     // console.log(message);
@@ -188,7 +195,7 @@ export default function AppFunctional(props) {
           DOWN
         </button>
         <button id="reset" onClick={reset}>
-          Reset
+          reset
         </button>
       </div>
       <form>
