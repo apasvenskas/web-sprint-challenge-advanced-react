@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 
@@ -9,12 +9,11 @@ const initialSteps = 0;
 const initialIndex = 4; // the index the "B" is at
 
 export default function AppFunctional(props) {
- 
   const [state, setState] = useState({
     message: initialMessage,
     email: initialEmail,
     steps: initialSteps,
-    // index: initialIndex,
+    index: initialIndex,
   });
 
   const [x, setX] = useState(2);
@@ -23,8 +22,6 @@ export default function AppFunctional(props) {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState(``);
   // const [presCount, setPressCount] = useState(0);
-
- 
 
   function displayMessage(event) {
     const direction = event.target.id;
@@ -40,9 +37,9 @@ export default function AppFunctional(props) {
       setMessage("");
       // setPressCount(0);
     }
-    console.log(message);
+    // console.log(message);
   }
- 
+
   function reset() {
     // Use this helper to reset all states to their initial values.
 
@@ -50,12 +47,12 @@ export default function AppFunctional(props) {
       message: initialMessage,
       email: initialEmail,
       steps: initialSteps,
-      // index: initialIndex,
+      index: initialIndex,
     });
     setX(2);
     setY(2);
     setCount(0);
-    setMessage('');
+    setMessage("");
     // setPressCount(0);
     // console.log(message, email, steps, x, y);
   }
@@ -64,27 +61,27 @@ export default function AppFunctional(props) {
     if (x > 1) {
       setX(x - 1);
     }
-    console.log(x, message);
+    // console.log(x);
   }
 
   function moveRight() {
     if (x < 3) {
       setX(x + 1);
     }
-    console.log(x, message);
+    // console.log(x);
   }
 
   function moveDown() {
     if (y < 3) {
       setY(y + 1);
     }
-    console.log(y);
+    // console.log(y);
   }
   function moveUp() {
     if (y > 1) {
       setY(y - 1);
     }
-    console.log(y);
+    // console.log(y);
   }
 
   function onChange(event) {
@@ -102,7 +99,6 @@ export default function AppFunctional(props) {
       setCount(count + 1);
     }
   }
-
 
   function handleClickLeft(event) {
     displayMessage(event);
@@ -126,39 +122,44 @@ export default function AppFunctional(props) {
   }
 
   const handleEmailChange = (e) => {
-    setState({...state, email: e.target.value});
+    setState({ ...state, email: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, steps } = state;
     if (email === "") {
-      setMessage('Ouch: email is required')
+      setMessage("Ouch: email is required");
       return;
     }
-    
-     axios.post(
-        "http://localhost:9000/api/result",
-        { email, steps, x, y }
-      ).then(response => {
-         // need to format the winning message. 
-      setMessage(response.data.message);
-      setState({...state, email: ""});
+    // check if the email is disabled
+    if (email === "foo@bar.baz") {
+      this.setState({ message: "foo@bar.baz failure #71" });
+      return;
+    }
+
+    axios
+      .post("http://localhost:9000/api/result", { email, steps, x, y })
+      .then((response) => {
+        // need to format the winning message.
+        setMessage(response.data.message);
+        setState({ ...state, email: "" });
       })
-     
-     .catch (error => {
-      setMessage(`Something went wrong: ${error/message}`);
-     }) 
 
-    console.log(message);
+      .catch((error) => {
+        setMessage(`Something went wrong: ${error / message}`);
+      });
+
+    // console.log(message);
   };
-
 
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates"> Coordinates ({`${x}, ${y}`})</h3>
-        <h3 id="steps">You moved {count === 1 ? '1 time': `${count} times`}</h3>
+        <h3 id="steps">
+          You moved {count === 1 ? "1 time" : `${count} times`}
+        </h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
@@ -174,10 +175,10 @@ export default function AppFunctional(props) {
         <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={handleClickLeft} >
+        <button id="left" onClick={handleClickLeft}>
           LEFT
         </button>
-        <button id="up" onClick={handleClickUp} >
+        <button id="up" onClick={handleClickUp}>
           UP
         </button>
         <button id="right" onClick={handleClickRight}>
@@ -191,17 +192,14 @@ export default function AppFunctional(props) {
         </button>
       </div>
       <form>
-        <input id="email" type="email" 
-          placeholder="type email" 
-          value={state.email} 
-          onChange={handleEmailChange} 
+        <input
+          id="email"
+          type="email"
+          placeholder="type email"
+          value={state.email}
+          onChange={handleEmailChange}
         ></input>
-        <input 
-          id="submit"
-          type="submit" 
-          onClick={handleSubmit}
-        >
-        </input>
+        <input id="submit" type="submit" onClick={handleSubmit}></input>
       </form>
     </div>
   );

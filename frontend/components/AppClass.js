@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import axios from 'axios'
 
 // Suggested initial states
 const initialMessage = ''
 const initialEmail = ''
 const initialSteps = 0
-// const initialIndex = 4 // the index the "B" is at
+const initialIndex = 4 // the index the "B" is at
 
 const initialState = {
   message: initialMessage,
   email: initialEmail,
-  // index: initialIndex,
+  index: initialIndex,
   steps: initialSteps,
 }
 
@@ -23,7 +23,7 @@ export default class AppClass extends React.Component {
       message: initialMessage,
       email: initialEmail,
       steps: initialSteps,
-      // index: initialIndex,
+      index: initialIndex,
       x: 2,
       y: 2,
       count: 0,
@@ -45,7 +45,7 @@ export default class AppClass extends React.Component {
    } else {
     this.setState({ message: '', presCount: 0 });
    }
-   console.log(this.state.message);
+  //  console.log(this.state.message);
   }
  
 
@@ -60,7 +60,7 @@ export default class AppClass extends React.Component {
       count: 0,
       // presCount: 0,
     });
-    console.log(this.state.message, this.state.email, this.state.steps, this.state.x, this.state.y);
+    // console.log(this.state.message, this.state.email, this.state.steps, this.state.x, this.state.y);
   }; 
 
   moveLeft = () => {
@@ -68,7 +68,7 @@ export default class AppClass extends React.Component {
     if (x > 1) {
       this.setState({x: x-1});
     }
-    console.log(this.state.x, this.state.message);
+    // console.log(this.state.x, this.state.message);
   };
 
   moveRight = () => {
@@ -76,7 +76,7 @@ export default class AppClass extends React.Component {
     if (x < 3) {
       this.setState({x: x+1});
     }
-    console.log(this.state.x, this.state.message);
+    // console.log(this.state.x, this.state.message);
   }
 
   moveUp = () => {
@@ -84,7 +84,7 @@ export default class AppClass extends React.Component {
     if (y > 1) {
       this.setState({y: y-1});
     }
-    console.log(this.state.y, this.state.message);
+    // console.log(this.state.y, this.state.message);
   }
 
   moveDown = () => {
@@ -92,7 +92,7 @@ export default class AppClass extends React.Component {
     if (y < 3) {
       this.setState({y: y + 1});
     }
-    console.log(this.state.y);
+    // console.log(this.state.y);
   }
 
   onChange = (event) => {
@@ -145,6 +145,12 @@ export default class AppClass extends React.Component {
       }) 
       return;
     }
+
+    if (email === "foo@bar.baz"){
+      this.setState({message: "foo@bar.baz failure #71"});
+      return;
+    }
+
      axios.post(
         "http://localhost:9000/api/result",
         { email, steps, x, y }
