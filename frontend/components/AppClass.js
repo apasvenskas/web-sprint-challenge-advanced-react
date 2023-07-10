@@ -165,9 +165,9 @@ export default class AppClass extends React.Component {
       })
       .catch((error) => {
         if (error.response && error.response.status === 403) {
-          const number = Math.floor(Math.random() * 100) + 1;
+          // const number = Math.floor(Math.random() * 100) + 1;
           this.setState({
-            message: `foo@bar.baz failure #${number}`,
+            message: `@bar.baz failure #71`,
             email: "",
           });
         

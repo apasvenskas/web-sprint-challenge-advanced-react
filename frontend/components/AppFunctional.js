@@ -19,7 +19,7 @@ export default function AppFunctional(props) {
   const [y, setY] = useState(2);
 
   const [count, setCount] = useState(0);
-  const [message, setMessage] = useState(``);
+  const [message, setMessage] = useState(initialMessage);
   // const [presCount, setPressCount] = useState(0);
 
   function displayMessage(event) {
@@ -144,19 +144,20 @@ export default function AppFunctional(props) {
         // need to format the winning message.
         setMessage(response.data.message);
         setState({ ...state, email: "" });
+        console.log(response.data.message);
       })
-
+      
       .catch((error) => {
         if (error.response && error.response.status === 403) {
-          const number = Math.floor(Math.random() * 100) + 1;
-          setMessage(`foo@bar.baz failure #${number}`);
+          // const number = Math.floor(Math.random() * 100) + 1;
+          setMessage(error.response.data.message); //`foo@bar.baz failure #71`
           setState({ ...state, email: "" });
         } else {
           setMessage(`Something went wrong: ${error / message}`);
          
         }
       });
-
+      console.log('message', message);
     // console.log(message);
   };
 
