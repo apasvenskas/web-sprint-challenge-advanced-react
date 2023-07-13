@@ -5,20 +5,20 @@ import axios from "axios";
 const initialMessage = "";
 const initialEmail = "";
 const initialSteps = 0;
-const initialIndex = 4; // the index the "B" is at
+// const initialIndex = 4; // the index the "B" is at
 
 export default function AppFunctional(props) {
   const [state, setState] = useState({
     message: initialMessage,
     email: initialEmail,
     steps: initialSteps,
-    index: initialIndex,
+    // index: initialIndex,
   });
 
   const [x, setX] = useState(2);
   const [y, setY] = useState(2);
 
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   const [message, setMessage] = useState(initialMessage);
   // const [presCount, setPressCount] = useState(0);
 
@@ -46,16 +46,29 @@ export default function AppFunctional(props) {
       message: initialMessage,
       email: initialEmail,
       steps: initialSteps,
-      index: initialIndex,
+      // index: initialIndex,
     });
     setX(2);
     setY(2);
-    setCount(0);
+    // setCount(0);
     setMessage("");
     // setPressCount(0);
     // console.log(message, email, steps, x, y);
   }
 
+  function move(event) {
+    const direction = event.target.id;
+    if (direction === 'left' && x > 1) {
+      setX(x - 1)
+    } else if (direction === 'right' && x < 3){
+      setX(x + 1)
+    } else if (direction === 'up' && y > 1){
+      setY(y - 1)
+    } else if (direction === 'down' && y < 3){
+      setY(y + 1)
+    }
+  }
+/*
   function moveLeft() {
     if (x > 1) {
       setX(x - 1);
@@ -82,41 +95,41 @@ export default function AppFunctional(props) {
     }
     // console.log(y);
   }
-
+*/
   function onChange(event) {
     const direction = event.target.id;
     // You will need this to update the value of the input.
     if (x === 1 && direction === "left") {
-      setCount(count);
+      setState({ ...state, steps: state.steps});
     } else if (x === 3 && direction === "right") {
-      setCount(count);
+      setState({ ...state, steps: state.steps});
     } else if (y === 1 && direction === "up") {
-      setCount(count);
+      setState({ ...state, steps: state.steps});
     } else if (y === 3 && direction === "down") {
-      setCount(count);
+      setState({ ...state, steps: state.steps});
     } else {
-      setCount(count + 1);
+      setState({ ...state, steps: state.steps + 1});
     }
   }
 
   function handleClickLeft(event) {
     displayMessage(event);
-    moveLeft();
+    move(event);
     onChange(event);
   }
   function handleClickRight(event) {
     displayMessage(event);
-    moveRight();
+    move(event);
     onChange(event);
   }
   function handleClickUp(event) {
     displayMessage(event);
-    moveUp();
+    move(event);
     onChange(event);
   }
   function handleClickDown(event) {
     displayMessage(event);
-    moveDown();
+    move(event);
     onChange(event);
   }
 
@@ -133,7 +146,7 @@ export default function AppFunctional(props) {
       return;
     }
 
-    if(!emailRegex.test(email)){
+    if (!emailRegex.test(email)) {
       setMessage("Ouch: email must be a valid email");
       return;
     }
@@ -144,9 +157,9 @@ export default function AppFunctional(props) {
         // need to format the winning message.
         setMessage(response.data.message);
         setState({ ...state, email: "" });
-        console.log(response.data.message);
+        console.log(response.data);
       })
-      
+
       .catch((error) => {
         if (error.response && error.response.status === 403) {
           // const number = Math.floor(Math.random() * 100) + 1;
@@ -154,10 +167,9 @@ export default function AppFunctional(props) {
           setState({ ...state, email: "" });
         } else {
           setMessage(`Something went wrong: ${error / message}`);
-         
         }
       });
-      console.log('message', message);
+    console.log("message", message);
     // console.log(message);
   };
 
@@ -166,7 +178,7 @@ export default function AppFunctional(props) {
       <div className="info">
         <h3 id="coordinates"> Coordinates ({`${x}, ${y}`})</h3>
         <h3 id="steps">
-          You moved {count === 1 ? "1 time" : `${count} times`}
+          You moved {state.steps === 1 ? "1 time" : `${state.steps} times`}
         </h3>
       </div>
       <div id="grid">
