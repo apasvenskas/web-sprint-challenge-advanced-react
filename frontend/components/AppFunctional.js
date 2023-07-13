@@ -18,9 +18,9 @@ export default function AppFunctional(props) {
   const [x, setX] = useState(2);
   const [y, setY] = useState(2);
 
-  // const [count, setCount] = useState(0);
+  
   const [message, setMessage] = useState(initialMessage);
-  // const [presCount, setPressCount] = useState(0);
+  
 
   function displayMessage(event) {
     const direction = event.target.id;

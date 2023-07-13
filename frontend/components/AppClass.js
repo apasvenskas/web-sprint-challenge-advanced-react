@@ -28,7 +28,7 @@ export default class AppClass extends React.Component {
       // index: initialIndex,
       x: 2,
       y: 2,
-      count: 0,
+      // count: 0,
       // presCount: 0,
     };
   }
@@ -58,10 +58,8 @@ export default class AppClass extends React.Component {
       // index: initialIndex,
       x: 2,
       y: 2,
-      count: 0,
-      // presCount: 0,
     });
-    // console.log(this.state.message, this.state.email, this.state.steps, this.state.x, this.state.y);
+    
   };
 
   moveLeft = () => {
@@ -97,18 +95,18 @@ export default class AppClass extends React.Component {
   };
 
   onChange = (event) => {
-    const { x, y, count } = this.state;
+    // const { x, y, steps } = this.state;
     const direction = event.target.id;
-    if (x === 1 && direction === "left") {
-      this.setState({ count });
-    } else if (x === 3 && direction === "right") {
-      this.setState({ count });
-    } else if (y === 1 && direction === "up") {
-      this.setState({ count });
-    } else if (y === 3 && direction === "down") {
-      this.setState({ count });
+    if (this.state.x === 1 && direction === "left") {
+      this.setState({steps: this.state.steps });
+    } else if (this.state.x === 3 && direction === "right") {
+      this.setState({steps: this.state.steps });
+    } else if (this.state.y === 1 && direction === "up") {
+      this.setState({steps: this.state.steps });
+    } else if (this.state.y === 3 && direction === "down") {
+      this.setState({steps: this.state.steps });
     } else {
-      this.setState({ count: count + 1 });
+      this.setState({steps: this.state.steps + 1 });
     }
   };
 
@@ -137,7 +135,6 @@ export default class AppClass extends React.Component {
     this.setState({ email: e.target.value });
   };
 
-  
   handleSubmit = (e) => {
     e.preventDefault();
     const { email, steps, x, y } = this.state;
@@ -148,12 +145,10 @@ export default class AppClass extends React.Component {
       return;
     }
 
-    if(!emailRegex.test(email)) {
-      this.setState({ message: "Ouch: email must be a valid email"});
+    if (!emailRegex.test(email)) {
+      this.setState({ message: "Ouch: email must be a valid email" });
       return;
     }
-
-    
 
     axios
       .post("http://localhost:9000/api/result", { email, steps, x, y })
@@ -172,7 +167,6 @@ export default class AppClass extends React.Component {
             message: error.response.data.message, //`@bar.baz failure #71`
             email: "",
           });
-        
         } else {
           this.setState({
             message: `Something went wrong: ${error.message}`,
@@ -191,7 +185,8 @@ export default class AppClass extends React.Component {
         <div className="info">
           <h3 id="coordinates">Coordinates ({`${x}, ${y}`})</h3>
           <h3 id="steps">
-            You moved {count === 1 ? "1 time" : `${count} times`}
+            You moved{" "}
+            {this.state.steps === 1 ? "1 time" : `${this.state.steps} times`}
           </h3>
         </div>
         <div id="grid">
